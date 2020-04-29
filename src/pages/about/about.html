@@ -7,31 +7,48 @@
 </ion-header>
 
 <ion-content padding>
-<h2>Create New Entry</h2>
+<!--
 <p>This page will create options for the user to create a new journal entry</p>
 <h4>Journal Entry Contents</h4>
 <ul>
-  <li>Date</li>
-  <li>Title</li>
-  <li>Place</li>
-  <li>Photos (1-4)</li>
-  <li>Blurb</li>
-</ul>
+  <li>Still need to do a pop-up page for the Blurb</li>
+</ul> -->
+
+<h1 text-center>Create A New Entry</h1>
 
 <ion-list>
 
   <ion-item>
-    <ion-input type="text" placeholder="Title"></ion-input>
+    <ion-label>Entry Date</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
   </ion-item>
 
   <ion-item>
-    <ion-input type="Date"></ion-input>
+    <ion-label floating>Title</ion-label>
+    <ion-input type="text"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input type="text" placeholder="Location"></ion-input>
+    <ion-label floating>Location</ion-label>
+    <ion-input type="text"></ion-input>
   </ion-item>
+  <button ion-item>
+    <ion-label>Select a theme</ion-label>
+    
+  </button>
+  <button ion-item>
+    <ion-label>Add Title Photo</ion-label>
+    
+  </button>
 
+  <button ion-item>
+    Add Description...
+  </button>
+
+  <button ion-item>
+    <ion-label>Add Additional Photos</ion-label>
+    
+  </button>
 </ion-list>
 
 
