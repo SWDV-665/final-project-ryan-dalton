@@ -1,12 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>New Description</ion-title>
+    <ion-title>Enter Text</ion-title>
     <ion-buttons>
-      <ion-button (click)="saveModal()">Save</ion-button>
+      <button float-left (click)="closeModal()">Cancel</button>
+      <button float-right color="blue" (click)="saveModal(textEntry)">Save</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
+  <ion-item>
+    <ion-textarea rows="24" cols="12"  [(ngModel)]="textEntry" placeholder="Input your journal entry here..."></ion-textarea>
+  </ion-item>
 </ion-content>

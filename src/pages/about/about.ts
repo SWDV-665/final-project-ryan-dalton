@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ModalController} from 'ionic-angular';
+import { Modal, ModalController} from 'ionic-angular';
 
 
 @Component({
@@ -13,11 +13,25 @@ export class AboutPage {
 
   }
 
-  presentModal() {
-    const modal = this.modalCtrl.create('ModalPage');
-    modal.present();
+  ionViewDidEnter(){
+    //Refresh
   }
 
-}
+  checkAllEntries() {
+    return true;
+  }
 
+  presentModal() {
+    const myModal: Modal = this.modalCtrl.create('ModalPage');
+    myModal.present();
+    
+    myModal.onDidDismiss((textEntry) => {
+      console.log("brought data", textEntry, "out of ModalPage");
+    })
+
+  }
+
+  
+}
+  
 
