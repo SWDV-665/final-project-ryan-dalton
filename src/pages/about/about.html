@@ -32,16 +32,20 @@
     <ion-label floating>Location</ion-label>
     <ion-input type="text"></ion-input>
   </ion-item>
+  <!--  Future feature where user can choose their own theme.
+
   <button ion-item>
     <ion-label>Select a theme</ion-label>
-    
-  </button>
-  <button ion-item>
+  </button>  -->
+
+  <button ion-item (click)="openGallery()">
     <ion-label>Add a Photo...</ion-label>
   </button>
 
+  <img [src]="base64Image"/>
+
   <button ion-item (click)="presentModal()">
-    Add Description {{textEntry}}
+    Add Description <p style="color:grey">{{textEntry}}</p>
   </button>
   
 </ion-list>

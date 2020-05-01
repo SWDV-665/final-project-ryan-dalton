@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Modal, ModalController} from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
-
+import { CameraServiceProvider } from '../../providers/camera-service/camera-service';
 
 @Component({
   selector: 'page-about',
@@ -11,15 +11,18 @@ import { NavParams } from 'ionic-angular';
 })
 export class AboutPage {
   textEntry: String;
+  data: JSON;
 
  
   constructor(public navCtrl: NavController, 
               public modalCtrl: ModalController, 
               public viewCtrl: ViewController, 
-              public navParams: NavParams) {
+              public navParams: NavParams,
+              public camera: CameraServiceProvider,
+              ) {
               
               this.textEntry = null;
-      
+              this.data = null;
   
   }
 
@@ -47,7 +50,13 @@ export class AboutPage {
     
   }
 
+  openGallery(){
+    this.camera.openGallery()
+  }
+
+ 
+  }
+
   
-}
   
 

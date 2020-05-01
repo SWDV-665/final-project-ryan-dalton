@@ -12,6 +12,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { JournalEntryProvider } from '../providers/journal-entry/journal-entry';
 import { ImageUploadServiceProvider } from '../providers/image-upload-service/image-upload-service'
+import { CameraServiceProvider } from '../providers/camera-service/camera-service';
+
+import { HttpClientModule } from '@angular/common/http';
+import { Camera } from '@ionic-native/camera/ngx';
+
 
 
 @NgModule({
@@ -24,7 +29,9 @@ import { ImageUploadServiceProvider } from '../providers/image-upload-service/im
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +46,9 @@ import { ImageUploadServiceProvider } from '../providers/image-upload-service/im
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     JournalEntryProvider,
-    ImageUploadServiceProvider
+    ImageUploadServiceProvider,
+    CameraServiceProvider,
+    Camera
     
   ]
 })
