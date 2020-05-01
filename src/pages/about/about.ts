@@ -3,7 +3,8 @@ import { NavController } from 'ionic-angular';
 import { Modal, ModalController} from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
-import { CameraServiceProvider } from '../../providers/camera-service/camera-service';
+//import { CameraServiceProvider } from '../../providers/camera-service/camera-service';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @Component({
   selector: 'page-about',
@@ -11,19 +12,20 @@ import { CameraServiceProvider } from '../../providers/camera-service/camera-ser
 })
 export class AboutPage {
   textEntry: String;
-  data: JSON;
-
+  public imagesource: String;
+  //private win: any = window;
  
   constructor(public navCtrl: NavController, 
               public modalCtrl: ModalController, 
               public viewCtrl: ViewController, 
               public navParams: NavParams,
-              public camera: CameraServiceProvider,
+              public camera: Camera
+              
               ) {
               
               this.textEntry = null;
-              this.data = null;
-  
+              this.imagesource = "assets/imgs/photo-icon.png" 
+              
   }
 
   ionViewDidEnter(){
@@ -50,12 +52,26 @@ export class AboutPage {
     
   }
 
-  openGallery(){
-    this.camera.openGallery()
+
+  getImage(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum:false
+    }
+  
+    this.camera.getPicture(options).then((imageData) => {
+      this.imagesource = imageData; //'data:image/jpeg/base64,' + 
+      console.log("Added image URI: ", imageData)
+    }, (err)=> {
+      console.log(err);
+    });
   }
 
- 
   }
+    
+
 
   
   

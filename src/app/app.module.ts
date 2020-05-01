@@ -15,7 +15,7 @@ import { ImageUploadServiceProvider } from '../providers/image-upload-service/im
 import { CameraServiceProvider } from '../providers/camera-service/camera-service';
 
 import { HttpClientModule } from '@angular/common/http';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/camera';
 
 
 
