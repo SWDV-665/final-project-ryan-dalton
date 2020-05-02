@@ -6,7 +6,7 @@ import { NavParams } from 'ionic-angular';
 //import { CameraServiceProvider } from '../../providers/camera-service/camera-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { JournalEntryProvider } from '../../providers/journal-entry/journal-entry';
-
+import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'page-about',
@@ -28,7 +28,8 @@ export class AboutPage {
               public viewCtrl: ViewController,
               public navParams: NavParams,
               public camera: Camera,
-              public journalService: JournalEntryProvider
+              public journalService: JournalEntryProvider,
+              private file: File
               ) {
                
   }
@@ -56,23 +57,27 @@ export class AboutPage {
   }
 
   loadModalContent(textEntry){
-    this.textEntry = textEntry
-    
+    this.textEntry = textEntry;
   }
 
 
   getImage(){
     const options: CameraOptions = {
       quality: 100,
+      allowEdit: true,
+      encodingType: this.camera.EncodingType.JPEG,
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum:false
+      saveToPhotoAlbum: true
     }
   
     this.camera.getPicture(options).then((imageData) => {
+      let filename = imageData.substring(imageData.lastIndexOf('/')+1);
+      let path = imageData.substring(0, imageData.lastIndexOf('/')+1);
       this.imagesource = imageData; //'data:image/jpeg/base64,' + 
-      this.picture = imageData;
-      console.log("Added image URI: ", imageData)
+      //then use the method reasDataURL  btw. var_picture is ur image variable
+      this.file.readAsDataURL(path, filename).then(res=> this.picture = res);
+      console.log("LOOOOK: ", this.picture);
     }, (err)=> {
       console.log(err);
     });
