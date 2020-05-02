@@ -1,37 +1,53 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { JournalEntryProvider } from '../../providers/journal-entry/journal-entry';
+import { CardViewPage } from '../../pages/card-view/card-view'
+import { NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  
+  
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public dataService: JournalEntryProvider) {
+  
+  entries = []
+  errorMessage: string;
 
+  constructor(public navparams: NavParams, public navCtrl: NavController, public dataService: JournalEntryProvider) {
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      this.loadEntries();
+    });
   }
 
+  ionViewDidLoad(){
+    this.loadEntries();
+  }
 
+  
   loadEntries(){
-    return this.dataService.getItems();
-  }
-
-
-  viewEntry(entry, index){
-    console.log("Viewing Entry - ", entry, index)
-    this.dataService.viewItem(index)
+    console.log("Loading Entries...")
+    this.dataService.getEntries().subscribe(
+      entries => this.entries = entries,
+      error => this.errorMessage = <any>error);
 
   }
+
+  
+  viewEntry(entry){
+  console.log("Viewing Entry - ", entry)
+  this.navCtrl.push(CardViewPage, entry);
+  }
+
 
   editEntry(entry, index){
     console.log("Editing Entry - ", entry, index)
-    this.dataService.editEntry(index)
+    this.dataService.editEntry(index, entry);
   }
 
-  shareEntry(entry, index){
-    console.log("Sharing Entry - ", entry, index)
-    this.dataService.shareEntry(index)
-  }
-
+  
 }
+
+

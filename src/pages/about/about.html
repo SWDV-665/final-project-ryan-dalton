@@ -28,12 +28,11 @@
     <ion-input type="text"></ion-input>
   </ion-item>
 
+  <!--  Future feature where user can choose their own theme.
   <ion-item>
     <ion-label floating>Location</ion-label>
     <ion-input type="text"></ion-input>
   </ion-item>
-  <!--  Future feature where user can choose their own theme.
-
   <button ion-item>
     <ion-label>Select a theme</ion-label>
   </button>  -->
@@ -42,7 +41,9 @@
     <ion-label>Add a Photo...</ion-label>
   </button>
   <div text-center padding>
+  <ion-card>
   <ion-img height="180" width="200" background="white" src="{{imagesource}}"></ion-img>
+</ion-card>
   </div>
   <button ion-item (click)="presentModal()">
     Add Description <p style="color:grey">{{textEntry}}</p>

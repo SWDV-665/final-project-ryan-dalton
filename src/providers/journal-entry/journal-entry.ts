@@ -1,6 +1,10 @@
-//import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController } from 'ionic-angular';
+import { Subject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+
 
 /*
   Generated class for the JournalEntryProvider provider.
@@ -11,49 +15,85 @@ import { ToastController, AlertController } from 'ionic-angular';
 @Injectable()
 export class JournalEntryProvider {
 
-  entries = [
-    {
-      ItemID: '1',
-      Title: "Our Family Picnic",
-      Date: "4/15/2020",
-      Picture: "Weekend-Family-Picnic-Stock-Photo-04.jpg",
-      Theme: "Basic",
-      Blurb: "We had such a blast at the Veterans Memorial Park earlier this week! We ate some pizza, and played games. It was beautiful and sunny! Amazing time with the family.",
-    },
-    {
-      ItemID: '2',
-      Title: "Scary Earthquake",
-      Date: "4/18/2020",
-      Picture: "Weekend-Family-Picnic-Stock-Photo-04.jpg",
-      Theme: "Basic",
-      Blurb: "Tonight there was a scary earthquake! We're glad nobody got hurt."
-    }
-
-  ]
-
-
-  constructor(public toastCtrl: ToastController, public alertCtrl: AlertController) {
-    console.log('JournalEntry provider started');
+  JournalEntry = {
+    title: String,
+    itemDate: Date,
+    picture: String,
+    blurb: String
   }
 
-    getItems(){
-      return this.entries;
+  entries: any = [];
+
+  dataChanged$: Observable<boolean>;
+
+  public dataChangeSubject: Subject<boolean>;
+
+  baseURL = "https://journal-server-h.herokuapp.com"
+
+
+  constructor(public http: HttpClient, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+    console.log('JournalEntry data upload provider service started');
+
+    this.dataChangeSubject = new Subject<boolean>();
+    this.dataChanged$ = this.dataChangeSubject.asObservable();
   }
 
-    //Need to build these out
-    viewItem(index){
-      return 0
+    //I am borrowing from the groceries app assignment from week 7 on this code
+    //as I would also like to use a REST service to pas data back and forth
+    //with MongoDB
+
+    getEntries(): Observable<object[]> {
+    //DEBUG//console.log(this.baseURL + '/api/entries')
+    return this.http.get(this.baseURL + '/api/entries').pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+    private extractData(res: Response) {
+      let body = res;
+      return body || {};
     }
 
-    //Need to build these out
-    editEntry(index){
-      return 0
+    private handleError(error: Response | any) {
+      let errMsg: string;
+      if (error instanceof Response) {
+        const err = error || '';
+        errMsg = `${error.status} - ${error.statusText} || ''} ${err}`;
+      } else {
+        errMsg = error.message ? error.message : error.toString();
+      }
+      console.error(errMsg);
+      return Observable.throw(errMsg);
     }
 
-    shareEntry(index){
-      return 0
+    removeEntry(id){
+      console.log("#### Removed Item - id = ", id);
+      this.http.delete(this.baseURL + "/api/entries/" + id).subscribe( res => {
+        this.entries = res;
+        this.dataChangeSubject.next(true);
+      })
     }
 
+    addEntry(data) {
+      this.http.post(this.baseURL + "/api/entries", data).subscribe(res => {
+        this.entries = res;
+        this.dataChangeSubject.next(true);
+      });
+    }
+
+    logItem(JournalEntry){
+      console.log("Journal Entry Details:", JournalEntry)
+      return JournalEntry
+    }
+
+    editEntry(entry, index) {
+      console.log("Edited the item = ", index, entry);
+      this.http.put(this.baseURL + "/api/entries/" + entry._id, entry).subscribe( res => {
+        this.entries = res;
+        this.dataChangeSubject.next(true);
+      });
+      }
 
 
 }

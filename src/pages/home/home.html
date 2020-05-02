@@ -10,10 +10,11 @@
 </ion-header>
 
 <ion-content padding class="card-background-page"> 
-  <h4 text-center *ngIf="loadEntries().length === 0">
+  <h1 text-center>My Photo Journal</h1>
+  <h4 text-center *ngIf="entries.length === 0">
     There are no journal entries available, please add some to view.
   </h4>
-  <h1 text-center>My Photo Journal</h1>
+  
 <!--Creating an example card to base off of when an entry is loaded
   <ion-card>
     
@@ -35,50 +36,19 @@
 
   <!--Another card example design follows used for scrolling through multiple entries in 
   an attractive format-->
-  
-  <ion-card>
-    <img src="assets/imgs/Weekend-Family-Picnic-Stock-Photo-04.jpg">
-    <div class="card-title">Our Family Picnic</div>
-    <div class="card-subtitle">April 20, 2020</div>
-    
-  </ion-card>
-
-
-
   <ion-list>
-    <ion-list-header>April 7, 2020</ion-list-header>
-
-    <ion-item>
-      <ion-thumbnail item-start>
-        <img src="assets/imgs/Weekend-Family-Picnic-Stock-Photo-04.jpg">
-      </ion-thumbnail>
-      <h2>Our Family Picnic</h2>
-      <p>Buena Vista Park</p>
-      <button ion-button clear item-end>View</button>
-    </ion-item>
-
-    <ion-item>
-      <ion-thumbnail item-start>
-        <img src="assets/imgs/Weekend-Family-Picnic-Stock-Photo-04.jpg">
-      </ion-thumbnail>
-      <h2>Our Family Picnic</h2>
-      <p>Buena Vista Park</p>
-      <button ion-button clear item-end>View</button>
-    </ion-item>
-
-    <ion-list-header>April 6, 2020</ion-list-header>
-    <ion-item>
-      <ion-thumbnail item-start>
-        <img src="assets/imgs/Weekend-Family-Picnic-Stock-Photo-04.jpg">
-      </ion-thumbnail>
-      <h2>Our Family Picnic</h2>
-      <p>Buena Vista Park</p>
-      <button ion-button clear item-end>View</button>
-    </ion-item>
-
+    <ion-list-header>
+      Entries
+    </ion-list-header>
+  
+  <ion-card *ngFor="let entry of entries; let i = index" (click)="viewEntry(entry)">
+    <img src="{{entry.picture}}">
+    <div class="card-title">{{entry.title}}</div>
+    <div class="card-subtitle">{{entry.itemDate | date}}</div>
+  </ion-card>
+  
   </ion-list>
 
   
 
-</ion-content>
 

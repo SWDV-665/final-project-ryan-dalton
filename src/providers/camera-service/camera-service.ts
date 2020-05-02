@@ -1,3 +1,8 @@
+//I ended up ultimately unusing this service provider.
+//Unfortunately there were too many problems in it interacting and sending back information
+//To seperate pages.  Instead I just dropped in the needed code functions into .ts pages 
+//on the entry upload page where I needed it.
+
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -16,8 +21,7 @@ export class CameraServiceProvider {
   myphotopath: string;
 
   constructor(public http: HttpClient, private camera: Camera) {
-    console.log('Started CameraServiceProvider Provider');
-    
+    console.log('Started CameraServiceProvider Provider');    
   }
 
 //Function to open the phone camera
