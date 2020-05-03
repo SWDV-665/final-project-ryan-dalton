@@ -11,6 +11,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="*" />
+    <allow-intent src="*" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
@@ -101,5 +103,5 @@
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-camera" spec="^4.1.0" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.2.1" />
-    <engine name="android" spec="^7.0.0" />
+    <engine name="android" spec="7.0.0" />
 </widget>

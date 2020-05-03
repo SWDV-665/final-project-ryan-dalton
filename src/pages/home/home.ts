@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { JournalEntryProvider } from '../../providers/journal-entry/journal-entry';
 import { CardViewPage } from '../../pages/card-view/card-view'
 import { NavParams } from 'ionic-angular';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-home',
@@ -16,9 +17,10 @@ export class HomePage {
   entries = []
   errorMessage: string;
 
-  constructor(public navparams: NavParams, public navCtrl: NavController, public dataService: JournalEntryProvider) {
+  constructor(public sanitizer: DomSanitizer, public navparams: NavParams, public navCtrl: NavController, public dataService: JournalEntryProvider) {
     dataService.dataChanged$.subscribe((dataChanged: boolean) => {
       this.loadEntries();
+      
     });
   }
 

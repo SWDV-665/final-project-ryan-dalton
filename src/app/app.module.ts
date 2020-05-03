@@ -18,9 +18,8 @@ import { CameraServiceProvider } from '../providers/camera-service/camera-servic
 import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
-
-
-
+import { DomSanitizer } from '@angular/platform-browser';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -30,12 +29,12 @@ import { File } from '@ionic-native/file';
     HomePage,
     TabsPage,
     CardViewPage
-    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
+    IonicModule.forRoot(MyApp)
     
   ],
   bootstrap: [IonicApp],
@@ -55,7 +54,7 @@ import { File } from '@ionic-native/file';
     ImageUploadServiceProvider,
     CameraServiceProvider,
     Camera,
-    File
+    File,
     
   ]
 })
