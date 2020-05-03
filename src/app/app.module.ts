@@ -18,7 +18,7 @@ import { CameraServiceProvider } from '../providers/camera-service/camera-servic
 import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
-import { DomSanitizer } from '@angular/platform-browser';
+//import { DomSanitizer } from '@angular/platform-browser';
 import { IonicStorageModule } from '@ionic/storage';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions';

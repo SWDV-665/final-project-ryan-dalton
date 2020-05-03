@@ -126,22 +126,16 @@ saveImage(tempImage){
 **/
 
 
-//Here we make sure we have Android Permissions to manipulate storagea and use the camera
+//Here we make sure we have Android Permissions to use the camera
   getAndroidPermissions(){
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
       result => console.log('Has permission?',result.hasPermission),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
-    );
+    ); 
+//Other permissions needed for future functionality:
+//this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE
+//this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
     
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-    result => console.log('Has permission?',result.hasPermission),
-    err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-  );
-  this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-    result => console.log('Has permission?',result.hasPermission),
-    err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
-  )
-  
   }
 
   //Complicated function that took way too long to get correctly done to get the photos
