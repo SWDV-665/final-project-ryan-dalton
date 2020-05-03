@@ -7,7 +7,7 @@ import { NavParams } from 'ionic-angular';
 //import { DomSanitizer } from '@angular/platform-browser';
 import { ToastController } from 'ionic-angular';
 import { ItemSliding } from 'ionic-angular';
-
+import { EditUploadPage } from '../../pages/edit-upload/edit-upload';
 
 @Component({
   selector: 'page-home',
@@ -51,9 +51,12 @@ export class HomePage {
   }
 
 
-  editEntry(entry, index){
-    console.log("Editing Entry - ", entry, index)
-    this.dataService.editEntry(index, entry);
+  editEntry(entry, id){
+    console.log("Editing Entry - ", entry.title, id);
+    this.toast("Editing entry - ", entry.title);
+    this.navCtrl.push(EditUploadPage, entry, id);
+    
+    //this.dataService.editEntry(index, entry);
   }
 
   removeEntry(entry, id){

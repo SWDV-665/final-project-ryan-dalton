@@ -1,0 +1,65 @@
+<!--
+  EDIT PAGE
+
+  This page is a copy of the normal CONTENT creation page except that it prepopulates with the data
+  sent to it from the form.
+
+  It also uses all of about pages TS except for the submit function which calls the data
+  service to do a POST to the heroku server.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Edit Entry
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<!--
+<p>This page will create options for the user to create a new journal entry</p>
+<h4>Journal Entry Contents</h4>
+<ul>
+  <li>Still need to do a pop-up page for the Blurb</li>
+</ul> -->
+
+<h1 text-center>Edit an Existing Entry</h1>
+
+<ion-list>
+
+  <ion-item>
+    <ion-label>Entry Date</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]={{itemDate | date}}></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Title</ion-label>
+    <ion-input type="text" [(ngModel)]={{title}}></ion-input>
+  </ion-item>
+
+  <!--  Future feature where user can choose their own theme.
+  <ion-item>
+    <ion-label floating>Location</ion-label>
+    <ion-input type="text"></ion-input>
+  </ion-item>
+  <button ion-item>
+    <ion-label>Select a theme</ion-label>
+  </button>  -->
+
+  <button ion-item (click)="getImage()">
+    <ion-label>Add a Photo...</ion-label>
+  </button>
+  <div text-center padding>
+  <ion-card>
+  <ion-img height="160" width="200" background="white" src="{{picture}}"></ion-img>
+</ion-card>
+  </div>
+  <button ion-item (click)="presentModal()">
+    Add Description <p style="color:grey">{{entry.blurb}}</p>
+  </button>
+  
+</ion-list>
+<div text-center>
+<button ion-button color="dark" round (click)="buttonClickedEdit()">Edit and Upload</button>
+</div>
+</ion-content>
