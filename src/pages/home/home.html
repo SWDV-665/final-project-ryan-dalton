@@ -17,9 +17,6 @@
   
 <!--Creating an example card to base off of when an entry is loaded
   <ion-card>
-    
-    
-      
     <img src="assets/imgs/Weekend-Family-Picnic-Stock-Photo-04.jpg">
     <ion-card-content>
     <ion-card-title>
@@ -36,16 +33,28 @@
 
   <!--Another card example design follows used for scrolling through multiple entries in 
   an attractive format-->
+  
   <ion-list>
     <ion-list-header>
       Entries
     </ion-list-header>
   
-  <ion-card *ngFor="let entry of entries; let i = index" (click)="viewEntry(entry)">
-    <img src="{{entry.picture}}">
-    <div class="card-title">{{entry.title}}</div>
-    <div class="card-subtitle">{{entry.itemDate | date}}</div>
-  </ion-card>
+  <ion-item-sliding *ngFor="let entry of entries; let i = index" #slidingItem>
+    <ion-item>
+      <ion-card (click)="viewEntry(entry)">
+        <img src="{{entry.picture}}">
+        <div class="card-title">{{entry.title}}</div>
+        <div class="card-subtitle">{{entry.itemDate | date}}</div>
+      
+    <ion-item-options>
+      <button (click)="removeItem(item, item._id)" ion-button color="danger" icon-start>
+      <ion-icon name="trash"></ion-icon>
+      Delete
+      </button>
+    </ion-item-options>
+    </ion-card>
+  </ion-item>
+  </ion-item-sliding>   
   
   </ion-list>
 

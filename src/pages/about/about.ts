@@ -9,7 +9,7 @@ import { JournalEntryProvider } from '../../providers/journal-entry/journal-entr
 import { File } from '@ionic-native/file';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
-import { WebViewOriginal } from '@ionic-native/ionic-webview';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 
 @Component({
@@ -17,8 +17,9 @@ import { WebViewOriginal } from '@ionic-native/ionic-webview';
   templateUrl: 'about.html',
 })
 export class AboutPage {
+  
   chosenDate;
-  private webview: WebViewOriginal;
+  public safeImg: any;
   public textEntry: String;
   public imagesource: String;
   public itemDate: Date;
@@ -27,19 +28,20 @@ export class AboutPage {
   //Using photopaths to local files - web support coming in the future
   public picture: any;
   private sanitize: DomSanitizer;
-  public base64image: string
-  //private win: any = window;
+  public base64image: string;
+  private win: any = window;
  
   constructor(
+              public webview: WebView,
               public sanitizer: DomSanitizer,
-              private storage: Storage,
               public navCtrl: NavController, 
               public modalCtrl: ModalController, 
               public viewCtrl: ViewController,
               public navParams: NavParams,
               public camera: Camera,
               public journalService: JournalEntryProvider,
-              private file: File
+              private file: File,
+              
               ) {
                 this.imagesource = "assets/imgs/photo-icon.png";
                 this.textEntry = "Enter info here";
@@ -73,58 +75,63 @@ export class AboutPage {
 
   async getImageSaved() {
   const options: CameraOptions = {
-    quality: 100,
+    quality: 50,
     destinationType: this.camera.DestinationType.FILE_URI,
     encodingType: this.camera.EncodingType.JPEG,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
     saveToPhotoAlbum: false
   }
   console.log("GETTING IMAGE")
-  const tempImage = await this.camera.getPicture(options);
-  this.imagesource = tempImage;
-  await this.saveImage(tempImage);
+  this.camera.getPicture(options).then((imageData) =>{
+  this.imagesource = imageData,
+  this.picture = imageData,
+  this.saveImage(imageData);
+  });
+  
 }
 
-async saveImage(tempImage){
+saveImage(tempImage){
   const tempFilename = tempImage.substr(tempImage.lastIndexOf('/') + 1);
   const tempBaseFilesystemPath = tempImage.substr(0, tempImage.lastIndexOf('/') + 1);
   
   const newBaseFilesystemPath = this.file.externalDataDirectory; //dataDirectory;
-  console.log("NEW BASE PATH FOR NEW IMAGE IS:", newBaseFilesystemPath)
-  await this.file.copyFile(tempBaseFilesystemPath, tempFilename, newBaseFilesystemPath, tempFilename)
+  console.log("NEW BASE PATH FOR NEW IMAGE IS:", newBaseFilesystemPath);
+  console.log("THE NEW NAME FOR THE IMAGE IS:", tempFilename);
+  this.file.copyFile(tempBaseFilesystemPath, tempFilename, newBaseFilesystemPath, tempFilename);
   
   const storedPhoto = newBaseFilesystemPath + tempFilename;
-  const resolvedImg = this.webview.convertFileSrc(storedPhoto);
-  const safeImg = this.sanitizer.bypassSecurityTrustUrl(resolvedImg);
-  
+ 
   const oldpicture = this.picture
-  this.picture = resolvedImg;
+  this.picture = storedPhoto;
   console.log("THIS PICTURE CHANGED FROM: ", oldpicture," TO: ", this.picture);
   
 }
- 
+
 
   getImage(){
     const options: CameraOptions = {
       quality: 100,
       allowEdit: true,
       encodingType: this.camera.EncodingType.JPEG,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum: false
+      saveToPhotoAlbum: false,
+      targetWidth:300,
+      targetHeight:300
     }
   
     this.camera.getPicture(options).then((imageData) => {
       
       let filename = imageData.substring(imageData.lastIndexOf('/')+1);
       let path = imageData.substring(0, imageData.lastIndexOf('/')+1);
-      this.imagesource = imageData;
-      this.picture = imageData; //'data:image/jpeg/base64,' + 
+      this.imagesource = 'data:image/jpeg/base64,' + imageData;
+      this.picture = 'data:image/jpeg/base64,' + imageData;
       //then use the method reasDataURL  btw. var_picture is ur image variable
-      console.log("FILENAME", filename);
-      console.log("PATH", path);
-      //imageData.readAsDataURL(path, filename).then(res=> this.picture);
-      
+      //const newBaseFilesystemPath = this.file.externalDataDirectory;
+      //console.log("FILENAME", filename);
+      //console.log("PATH", path);
+      //const result = imageData.readAsDataURL(path, filename);//.then(res=> this.picture);
+      //this.picture = result;
     
     }, (err)=> {
       console.log("OH NOS");
@@ -132,8 +139,17 @@ async saveImage(tempImage){
     });
   }
 
-  buttonClicked(){
+  prepImage(imageSource) {
+    
+    const resolvedImg= this.webview.convertFileSrc(imageSource);
+    console.log("CONVERTED IMAGESOURCE to URL:", resolvedImg);
+    this.safeImg = this.sanitizer.bypassSecurityTrustUrl(resolvedImg);
+    console.log("URL SANITIZED")
+    this.picture = this.safeImg;
+  }
 
+  buttonClicked(){  
+    
     let data = {
       "title": this.title,
       "itemDate": this.chosenDate,
