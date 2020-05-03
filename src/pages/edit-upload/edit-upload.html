@@ -23,18 +23,18 @@
   <li>Still need to do a pop-up page for the Blurb</li>
 </ul> -->
 
-<h1 text-center>Edit an Existing Entry</h1>
+<h1 text-center>Edit Existing Entry</h1>
 
 <ion-list>
 
   <ion-item>
     <ion-label>Entry Date</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]={{itemDate | date}}></ion-datetime>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="itemDate"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Title</ion-label>
-    <ion-input type="text" [(ngModel)]={{title}}></ion-input>
+    <ion-input type="text" [(ngModel)]=title></ion-input>
   </ion-item>
 
   <!--  Future feature where user can choose their own theme.
@@ -55,7 +55,7 @@
 </ion-card>
   </div>
   <button ion-item (click)="presentModal()">
-    Add Description <p style="color:grey">{{entry.blurb}}</p>
+    Add Description <p style="color:grey">{{blurb}}</p>
   </button>
   
 </ion-list>

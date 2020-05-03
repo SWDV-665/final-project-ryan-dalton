@@ -14,8 +14,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'card-view.html',
 })
 
-
-
 export class CardViewPage {
   public title: String;
   public itemDate: String;

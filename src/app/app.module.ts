@@ -8,6 +8,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CardViewPage } from '../pages/card-view/card-view';
+import { EditUploadPage } from '../pages/edit-upload/edit-upload';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -31,7 +32,8 @@ import { ItemSliding } from 'ionic-angular';
     ContactPage,
     HomePage,
     TabsPage,
-    CardViewPage
+    CardViewPage,
+    EditUploadPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { ItemSliding } from 'ionic-angular';
     ContactPage,
     HomePage,
     TabsPage,
-    CardViewPage
+    CardViewPage,
+    EditUploadPage
   ],
   providers: [
     StatusBar,

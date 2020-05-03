@@ -54,7 +54,7 @@ export class HomePage {
   editEntry(entry, id){
     console.log("Editing Entry - ", entry.title, id);
     this.toast("Editing entry - ", entry.title);
-    this.navCtrl.push(EditUploadPage, entry, id);
+    this.navCtrl.push(EditUploadPage, entry);
     
     //this.dataService.editEntry(index, entry);
   }
