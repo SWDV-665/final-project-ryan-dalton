@@ -1,3 +1,5 @@
+
+
 <ion-header>
   <ion-navbar>
     <ion-title>Journal Entries</ion-title>
@@ -8,6 +10,8 @@
     <ion-title>Journal Entries</ion-title>
   </ion-navbar>
 </ion-header>
+
+
 
 <ion-content padding class="card-background-page"> 
   <h1 text-center>My Photo Journal</h1>
@@ -33,7 +37,7 @@
 
   <!--Another card example design follows used for scrolling through multiple entries in 
   an attractive format-->
-  
+
   <ion-list>
     <ion-list-header>
       Entries
@@ -45,16 +49,16 @@
         <img src="{{entry.picture}}">
         <div class="card-title">{{entry.title}}</div>
         <div class="card-subtitle">{{entry.itemDate | date}}</div>
-      
+      </ion-card>
+      </ion-item>
     <ion-item-options>
-      <button (click)="removeItem(item, item._id)" ion-button color="danger" icon-start>
+      <button (click)="removeEntry(entry, entry._id)" ion-button color="danger" icon-start>
       <ion-icon name="trash"></ion-icon>
       Delete
       </button>
     </ion-item-options>
-    </ion-card>
-  </ion-item>
-  </ion-item-sliding>   
+    
+    </ion-item-sliding>   
   
   </ion-list>
 

@@ -10,6 +10,7 @@ import { File } from '@ionic-native/file';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class AboutPage {
   private win: any = window;
  
   constructor(
+              private androidPermissions: AndroidPermissions, 
               public webview: WebView,
               public sanitizer: DomSanitizer,
               public navCtrl: NavController, 
@@ -106,7 +108,23 @@ saveImage(tempImage){
   console.log("THIS PICTURE CHANGED FROM: ", oldpicture," TO: ", this.picture);
   
 }
-
+  //Here we make sure we have Android Permissions to manipulate storagea and use the camera
+  getAndroidPermissions(){
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
+      result => console.log('Has permission?',result.hasPermission),
+      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
+    );
+    
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+    result => console.log('Has permission?',result.hasPermission),
+    err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
+  );
+  this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+    result => console.log('Has permission?',result.hasPermission),
+    err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+  )
+  
+  }
 
   getImage(){
     const options: CameraOptions = {
@@ -116,16 +134,16 @@ saveImage(tempImage){
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       saveToPhotoAlbum: false,
-      targetWidth:300,
-      targetHeight:300
+      targetWidth:200,
+      targetHeight:200
     }
-  
+    this.getAndroidPermissions()
     this.camera.getPicture(options).then((imageData) => {
       
       let filename = imageData.substring(imageData.lastIndexOf('/')+1);
       let path = imageData.substring(0, imageData.lastIndexOf('/')+1);
-      this.imagesource = 'data:image/jpeg/base64,' + imageData;
-      this.picture = 'data:image/jpeg/base64,' + imageData;
+      this.imagesource = 'data:image/jpeg;base64,' + imageData;
+      this.picture = 'data:image/jpeg;base64,' + imageData;
       //then use the method reasDataURL  btw. var_picture is ur image variable
       //const newBaseFilesystemPath = this.file.externalDataDirectory;
       //console.log("FILENAME", filename);
@@ -139,6 +157,7 @@ saveImage(tempImage){
     });
   }
 
+  /** 
   prepImage(imageSource) {
     
     const resolvedImg= this.webview.convertFileSrc(imageSource);
@@ -146,7 +165,7 @@ saveImage(tempImage){
     this.safeImg = this.sanitizer.bypassSecurityTrustUrl(resolvedImg);
     console.log("URL SANITIZED")
     this.picture = this.safeImg;
-  }
+  }*/
 
   buttonClicked(){  
     
