@@ -24,6 +24,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ItemSliding } from 'ionic-angular';
+import { InputProviderServiceProvider } from '../providers/input-provider-service/input-provider-service';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ItemSliding } from 'ionic-angular';
     File,
     WebView,
     AndroidPermissions,
-    ItemSliding
+    ItemSliding,
+    InputProviderServiceProvider
     
   ]
 })

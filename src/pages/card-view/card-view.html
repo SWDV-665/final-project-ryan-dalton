@@ -13,7 +13,8 @@
       <ion-card-title>
       {{title}}
       </ion-card-title>
-      <p>{{itemDate | date}}<br></p>
+      <!--Add an offset amount to account for the date getting adjusted by the browser for timezone-->
+      <p>{{itemDate | date:MMMddYYY:'+600'}}<br></p>
       
       <p><br>
         {{blurb}}

@@ -48,7 +48,7 @@
       <ion-card (click)="viewEntry(entry)">
         <img src="{{entry.picture}}">
         <div class="card-title">{{entry.title}}</div>
-        <div class="card-subtitle">{{entry.itemDate | date}}</div>
+        <div class="card-subtitle">{{entry.itemDate | date:MMMddYYY:'+600'}}</div>
       </ion-card>
       </ion-item>
     <ion-item-options>

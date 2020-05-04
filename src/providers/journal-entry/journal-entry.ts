@@ -87,9 +87,9 @@ export class JournalEntryProvider {
       return JournalEntry
     }
 
-    editEntry(entry, index) {
-      console.log("Edited the item = ", index, entry);
-      this.http.put(this.baseURL + "/api/entries/" + entry._id, entry).subscribe( res => {
+    editEntry(entry, id) {
+      console.log("Edited the item = ", id, entry);
+      this.http.put(this.baseURL + "/api/entries/" + id, entry).subscribe( res => {
         this.entries = res;
         this.dataChangeSubject.next(true);
       });

@@ -14,6 +14,7 @@ import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 
 
+
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html',
@@ -24,7 +25,7 @@ export class AboutPage {
   public safeImg: any;
   public textEntry: String;
   public imagesource: String;
-  public itemDate: Date;
+  public itemDate: String;
   public title: String;
   public blurb: String;
   //Using photopaths to local files - web support coming in the future
@@ -32,6 +33,7 @@ export class AboutPage {
   public base64image: string;
  
   constructor(
+              
               public toastCtrl: ToastController,
               public loadingCtrl: LoadingController,
               private androidPermissions: AndroidPermissions, 

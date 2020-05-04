@@ -4,10 +4,10 @@ import { EditUploadPage } from './edit-upload';
 
 @NgModule({
   declarations: [
-    EditUploadPage,
+    EditUploadPage
   ],
   imports: [
     IonicPageModule.forChild(EditUploadPage),
   ],
 })
-export class {}
+export class EditUploadPageModule{}
