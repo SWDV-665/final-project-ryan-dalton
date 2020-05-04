@@ -64,7 +64,7 @@ export class AboutPage {
   }
 
   presentModal() {
-    const myModal: Modal = this.modalCtrl.create('ModalPage');
+    const myModal: Modal = this.modalCtrl.create('ModalPage', {textEntry: this.textEntry});
     myModal.present();
     
     myModal.onDidDismiss((textEntry) => {

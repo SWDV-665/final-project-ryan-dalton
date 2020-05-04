@@ -17,12 +17,21 @@ import { ViewController } from 'ionic-angular';
 export class ModalPage {
 
   public textEntry:string;
-
+  public mode: string;
+  public savedEntry:string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
+    this.textEntry = this.navParams.get('textEntry');
+    this.mode = this.navParams.get('mode');
+    if (this.textEntry === "Enter info here"){
+      this.textEntry = "" //Opt to just have the placeholder the first time
+      
+    }
+    this.savedEntry = this.textEntry;
+
   }
 
   ionViewDidLoad() {
-    console.log('Loaded text entry ModalPage');
+    console.log('Loaded ModalPage');
   }
 
   saveModal(textEntry) {
@@ -34,8 +43,13 @@ export class ModalPage {
     console.log('Saved the following:', textEntry)
     this.viewCtrl.dismiss(textEntry) }
   }
-  closeModal() {
-    this.viewCtrl.dismiss();
+  closeModal(){ 
+  if (this.mode === "edit"){
+
+    this.viewCtrl.dismiss(this.savedEntry);} //keep users previous information showing
+    else{
+      this.viewCtrl.dismiss(); //Close and don't save info
+    }
 
   }
 

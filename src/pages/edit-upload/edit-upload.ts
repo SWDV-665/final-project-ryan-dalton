@@ -67,7 +67,7 @@ export class EditUploadPage{
   }
 
   presentModal() {
-    const myModal: Modal = this.modalCtrl.create('ModalPage');
+    const myModal: Modal = this.modalCtrl.create('ModalPage', {textEntry: this.blurb, mode: "edit"});
     myModal.present();
     
     myModal.onDidDismiss((textEntry) => {
